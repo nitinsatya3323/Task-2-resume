@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitin | CV</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --panel: #121829;
+    --line: #202a42;
+    --text: #eaf0fb;
+    --muted: #93a0bb;
+    --accent: #2dd4bf;
+    --accent2: #a78bfa;
+    --accent-soft: rgba(45, 212, 191, 0.12);
+    --todo: #f0b44c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .todo { color: var(--todo); }
+
+  /* ---------- Navigation ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(13, 17, 23, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 920px; margin: 0 auto; padding: 14px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .brand { font-weight: 700; letter-spacing: .3px; }
+  .links { display: flex; gap: 26px; }
+  .links a { color: var(--muted); font-size: 14px; font-weight: 500; }
+  .links a:hover, .links a.active { color: var(--text); text-decoration: none; }
+  .links a.active { box-shadow: 0 2px 0 var(--accent); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    max-width: 920px; margin: 0 auto; padding: 80px 24px 24px;
+    display: flex; align-items: center; gap: 36px;
+  }
+  .hero h1 {
+    font-size: 44px; line-height: 1.15;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .role { color: var(--accent); font-weight: 600; margin-top: 6px; }
+  .hero .summary { color: var(--muted); margin-top: 14px; max-width: 560px; }
+  .hero .actions { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    border: 1px solid var(--accent); cursor: pointer;
+  }
+  .btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent2)); border-color: transparent; color: #07111f; }
+  .btn.primary:hover { text-decoration: none; filter: brightness(1.1); }
+  .btn.ghost { background: transparent; color: var(--accent); }
+  .btn.ghost:hover { background: var(--accent-soft); text-decoration: none; }
+
+  /* ---------- Sections ---------- */
+  main { max-width: 920px; margin: 0 auto; padding: 0 24px 40px; }
+  section { padding-top: 64px; }
+  .section-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 22px;
+  }
+
+  /* Timeline cards (education + experience) */
+  .timeline { border-left: 2px solid var(--line); margin-left: 6px; }
+  .item { position: relative; padding: 0 0 26px 28px; }
+  .item:last-child { padding-bottom: 0; }
+  .item::before {
+    content: ""; position: absolute; left: -7px; top: 7px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--accent);
+  }
+  .item .head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .item h3 { font-size: 17px; }
+  .item .org { color: var(--accent); font-size: 14px; margin-top: 2px; }
+  .item .date { color: var(--muted); font-size: 13px; }
+  .item ul { margin: 10px 0 0 18px; color: var(--muted); font-size: 14.5px; }
+  .item li { margin-bottom: 4px; }
+
+  /* Skills */
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .skill-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .skill-card h3 { font-size: 14px; color: var(--muted); font-weight: 600; margin-bottom: 12px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 13px; padding: 5px 12px; border-radius: 99px;
+    background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(90,169,255,.25);
+  }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .contact-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+  .contact-card small { display: block; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .contact-card span { font-size: 15px; word-break: break-word; }
+
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 36px 0; margin-top: 40px; border-top: 1px solid var(--line); }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.show { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .hero { flex-direction: column; text-align: center; padding-top: 56px; }
+    .hero .actions { justify-content: center; }
+    .hero h1 { font-size: 32px; }
+    .links { gap: 16px; }
+    .brand { display: none; }
+    .nav-inner { justify-content: center; }
+  }
+  @media (max-width: 640px) { .hero { align-items: center; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand" id="brand"></div>
+    <div class="links">
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div>
+    <h1 id="name"></h1>
+    <div class="role" id="title"></div>
+    <p class="summary" id="summary"></p>
+    <div class="actions">
+      <a class="btn primary" href="#contact">Contact Me</a>
+      <a class="btn ghost" href="#experience">View Projects</a>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section id="education" class="reveal">
+    <div class="section-title">Education</div>
+    <div class="timeline" id="education-list"></div>
+  </section>
+
+  <section id="skills" class="reveal">
+    <div class="section-title">Skills</div>
+    <div class="skill-grid" id="skills-list"></div>
+  </section>
+
+  <section id="experience" class="reveal">
+    <div class="section-title">Experience</div>
+    <div class="timeline" id="experience-list"></div>
+  </section>
+
+  <section id="contact" class="reveal">
+    <div class="section-title">Contact Details</div>
+    <div class="contact-grid" id="contact-list"></div>
+  </section>
+</main>
+
+<footer id="footer"></footer>
+
+<script>
+  // ===== EDIT YOUR DETAILS HERE =====
+  // Anything written inside [square brackets] shows in amber so you can spot what still needs filling.
+  const cv = {
+    name: "Nitin",
+    title: "Computer Science Student",
+    summary: "Computer science student at Chennai Institute of Technology with hands-on experience in Java programming, machine learning and algorithm design. Seeking internship opportunities to build real-world software.",
+
+    education: [
+      {
+        degree: "B.E. Computer Science and Engineering",
+        org: "Chennai Institute of Technology, Chennai (Anna University)",
+        date: "2025 - 2029",
+        points: [
+          "CGPA: 8.58",
+          "Coursework: Design and Analysis of Algorithms, Java Programming, Machine Learning"
+        ]
+      }
+    ],
+
+    skills: [
+      { group: "Programming", items: ["Java", "Python", "HTML", "CSS", "JavaScript"] },
+      { group: "Machine Learning", items: ["Linear Regression", "KNN", "Perceptron / MLP", "CNN", "RNN / LSTM"] },
+      { group: "Algorithms", items: ["Dynamic Programming", "Backtracking", "Branch and Bound", "Knapsack", "TSP"] },
+      { group: "Tools", items: ["VS Code", "Jupyter Notebook", "Flask"] }
+    ],
+
+    experience: [
+      {
+        title: "Bank Account Management System",
+        org: "Java Programming Project (CS5304), with a teammate",
+        date: "2026",
+        points: [
+          "Built a console-based banking application in Java (JDK 21) with account creation, deposit, withdrawal, balance check and transaction history.",
+          "Used ArrayList and HashMap for in-memory storage, a layered design and exception handling for errors.",
+          "Prepared the project report and poster following the college PBL template."
+        ]
+      },
+      {
+        title: "Weather Forecasting System",
+        org: "Machine Learning Review Project",
+        date: "2026",
+        points: [
+          "Developed a weather forecasting model using Linear Regression in Python and Jupyter Notebook.",
+          "Covered the complete ML pipeline from data preparation to model evaluation and a live demo.",
+          "Planned a Flask web app to serve the saved model."
+        ]
+      }
+    ],
+
+    contact: [
+      { label: "Email", value: "nitinsatya003@gmail.com", link: "mailto:nitinsatya003@gmail.com" },
+      { label: "Phone", value: "+91 98765 43210", link: "tel:+919876543210" },
+      { label: "Location", value: "Chennai, Tamil Nadu, India" },
+      { label: "LinkedIn", value: "linkedin.com/in/nitinsatya", link: "https://linkedin.com/in/nitinsatya" },
+      { label: "GitHub", value: "github.com/nitinsatya", link: "https://github.com/nitinsatya" }
+    ]
+  };
+  // ===== END OF EDITABLE DATA =====
+
+  const $ = (id) => document.getElementById(id);
+
+  // Wrap any [bracketed] placeholder in an amber span
+  const fmt = (text) => text.replace(/\[[^\]]+\]/g, m => `<span class="todo">${m}</span>`);
+
+  // Header
+  $("brand").textContent = cv.name;
+  $("name").textContent = cv.name;
+  $("title").textContent = cv.title;
+  $("summary").textContent = cv.summary;
+  $("footer").textContent = "© " + new Date().getFullYear() + " " + cv.name;
+  document.title = cv.name + " | CV";
+
+  // Timeline sections
+  function renderTimeline(id, items, titleKey) {
+    $(id).innerHTML = items.map(i => `
+      <div class="item">
+        <div class="head">
+          <div>
+            <h3>${i[titleKey]}</h3>
+            <div class="org">${fmt(i.org)}</div>
+          </div>
+          <div class="date">${fmt(i.date)}</div>
+        </div>
+        <ul>${i.points.map(p => `<li>${fmt(p)}</li>`).join("")}</ul>
+      </div>`).join("");
+  }
+  renderTimeline("education-list", cv.education, "degree");
+  renderTimeline("experience-list", cv.experience, "title");
+
+  // Skills
+  $("skills-list").innerHTML = cv.skills.map(g => `
+    <div class="skill-card">
+      <h3>${g.group}</h3>
+      <div class="tags">${g.items.map(s => `<span class="tag">${s}</span>`).join("")}</div>
+    </div>`).join("");
+
+  // Contact
+  $("contact-list").innerHTML = cv.contact.map(c => `
+    <div class="contact-card">
+      <small>${c.label}</small>
+      <span>${c.link ? `<a href="${c.link}">${c.value}</a>` : fmt(c.value)}</span>
+    </div>`).join("");
+
+  // Scroll reveal
+  const reveal = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("show"); reveal.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".reveal").forEach(el => reveal.observe(el));
+
+  // Highlight the current section in the menu
+  const links = document.querySelectorAll(".links a");
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
+      }
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("section").forEach(s => spy.observe(s));
+</script>
+</body>
+</html>
